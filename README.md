@@ -1,7 +1,7 @@
 # Recipe Search App
 
 ## Demo
- [Demo](https://recipe-search-app-3ajs56eqd-ukeskin.vercel.app/)
+ [Demo](https://recipe-search-app-iu9l5zsa4-ukeskin.vercel.app/)
 ## Toolbox 🧰
 
 - Tailwind.css

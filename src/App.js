@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Recipe from "./Components/Recipe";
 
-import Recipe from "./Recipe";
 function App() {
   const [recipes, setRecipes] = useState([]);
-  const APP_ID = "5f171406";
-  const APP_KEY = "6d050b26a698f2144d9b1ba25bf31078";
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
 
-  const exampleRequest = `https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`;
+  const APP_ID = process.env.REACT_APP_APP_ID;
+  const APP_KEY = process.env.REACT_APP_APP_KEY;
+
+  const exampleRequest = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
 
   const getRecipes = () => {
     axios.get(exampleRequest).then((response) => {
@@ -17,36 +20,52 @@ function App() {
   };
   useEffect(() => {
     getRecipes();
-  }, []);
+  }, [query]);
+
+  const updateSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const getSearch = (e) => {
+    e.preventDefault();
+    setQuery(search);
+    setSearch("");
+  };
   return (
     <div className="bg-yellow-50">
-      <header className="bg-yellow-300  flex flex-col items-center justify-center p-4 h-screen/2">
-        <div className="text-4xl text-gray-800 font-semibold italic mb-4">
-          Recipe Search
-        </div>
-        <div className=" md:w-1/3 w-full flex rounded-xl">
-          <form className="w-full">
-            <input
-              className="w-full p-4 rounded-2xl text-gray-700 focus:outline-none"
-              placeholder="Search"
-              type="text"
-            />
-            {/* <button className="" type="submit">
-              Search
-            </button> */}
-          </form>
-        </div>
-      </header>
-      <div>
-        <div className="flex p-2 h-full flex-wrap">
-          {recipes.map((recipe) => (
-            <Recipe
-              title={recipe.recipe.label}
-              calories={recipe.recipe.calories}
-              image={recipe.recipe.image}
-            />
-          ))}
-        </div>
+      <div className="bg-yellow-300">
+        <header className="header">
+          <div>
+            <h1 className="text-4xl text-gray-800 font-semibold italic mb-4">
+              Recipe Search
+            </h1>
+          </div>
+          <div className=" md:w-2/3 w-full flex rounded-xl">
+            <form onSubmit={getSearch} className="w-full">
+              <input
+                value={search}
+                onChange={updateSearch}
+                className="w-full p-4 rounded-2xl text-gray-700 focus:outline-none"
+                placeholder="Search"
+                type="text"
+              />
+              <button className="search_button" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </header>
+      </div>
+
+      <div className="card_grid">
+        {recipes.map((recipe) => (
+          <Recipe
+            key={recipe.recipe.label}
+            title={recipe.recipe.label}
+            calories={recipe.recipe.calories}
+            image={recipe.recipe.image}
+          />
+        ))}
       </div>
     </div>
   );

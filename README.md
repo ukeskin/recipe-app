@@ -1,7 +1,7 @@
 # Recipe Search App
 
 ## Demo
- [Demo](https://www.edamam.com/)
+ [Demo](https://recipe-search-app-3ajs56eqd-ukeskin.vercel.app/)
 ## Toolbox 🧰
 
 - Tailwind.css

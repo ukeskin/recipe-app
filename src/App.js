@@ -10,15 +10,14 @@ function App() {
   const APP_ID = process.env.REACT_APP_APP_ID;
   const APP_KEY = process.env.REACT_APP_APP_KEY;
 
-  const exampleRequest = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
-
-  const getRecipes = () => {
-    axios.get(exampleRequest).then((response) => {
-      const data = response.data.hits;
-      setRecipes(data);
-    });
-  };
   useEffect(() => {
+    const exampleRequest = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
+    const getRecipes = () => {
+      axios.get(exampleRequest).then((response) => {
+        const data = response.data.hits;
+        setRecipes(data);
+      });
+    };
     getRecipes();
   }, [query]);
 
@@ -36,16 +35,14 @@ function App() {
       <div className="bg-yellow-300">
         <header className="header">
           <div>
-            <h1 className="text-4xl text-gray-800 font-semibold italic mb-4">
-              Recipe Search
-            </h1>
+            <h1 className="header_title">Recipe Search</h1>
           </div>
-          <div className=" md:w-2/3 w-full flex rounded-xl">
+          <div className="md:w-2/3 w-full flex rounded-xl">
             <form onSubmit={getSearch} className="w-full">
               <input
                 value={search}
                 onChange={updateSearch}
-                className="w-full p-4 rounded-2xl text-gray-700 focus:outline-none"
+                className="search_box"
                 placeholder="Search"
                 type="text"
               />
